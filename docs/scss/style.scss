@@ -1,0 +1,907 @@
+@font-face {
+  font-family: "GmarketSansMedium";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/GmarketSansMedium.woff")
+    format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+html {
+  overflow-x: hidden;
+
+  body {
+    font-family: "GmarketSansMedium";
+    text-underline-position: under;
+  }
+}
+
+$site-width: 1080px;
+
+/* 라이브러리 */
+.con-min-width {
+  min-width: $site-width;
+}
+
+.con {
+  width: $site-width;
+}
+
+/* 커스텀 */
+/* 탑바 스타일 시작 */
+.top-bar {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 100;
+
+  .logo {
+    background-image: url("../images/logo_black.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 116px 20px;
+    transition: opacity 0.3s;
+
+    &.active {
+      opacity: 0;
+    }
+  }
+}
+
+@mixin outlink-icon() {
+  content: "";
+  display: inline-block;
+  background-image: url("../images/svg_line_outlink.svg");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 14px 14px;
+  width: 20px;
+  height: 20px;
+  transform: translateY(-2px) translateX(3px);
+}
+
+.top-bar__menu-1 {
+  margin-left: auto;
+
+  .icon-on {
+    &::after {
+      @include outlink-icon;
+    }
+
+    &.ver2::after {
+      background-size: 20px 20px;
+      transform: translateY(3px) translateX(5px);
+    }
+  }
+
+  // 1차메뉴
+  .depth1 {
+    li:hover > a {
+      text-decoration: underline;
+    }
+
+    > li {
+      padding: 0 25px;
+
+      &:hover {
+        > a {
+          &::after {
+            display: block;
+          }
+        }
+
+        .mega-menu {
+          display: block;
+        }
+      }
+
+      > a {
+        display: flex;
+        height: 100%;
+        align-items: center;
+        position: relative;
+        padding: 0 10px;
+
+        &::after {
+          content: "";
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          width: 100%;
+          height: 2px;
+          background-color: black;
+          display: none;
+        }
+      }
+    }
+  }
+
+  @mixin depth-text($text-color: black, $font-size: 1rem) {
+    display: block;
+    text-align: center;
+    font-size: $font-size;
+    color: $text-color;
+  }
+
+  // 2차메뉴
+  .depth2 {
+    margin: 70px 0;
+    > li {
+      > a {
+        @include depth-text($font-size: 17px);
+        margin-bottom: 10px;
+      }
+    }
+  }
+
+  // 3차메뉴
+  .depth3 {
+    > li {
+      > a {
+        @include depth-text(#444, 13px);
+        padding: 12px 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+
+  .mega-menu {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    left: 0;
+    width: 100%;
+    min-height: 400px;
+    box-shadow: 0 12px 14px rgba(0, 0, 0, 0.12);
+    transform: translateY(1px);
+  }
+}
+
+.drop-down-box {
+  position: relative;
+
+  .drop-down-btn {
+    background-color: rgba(244, 244, 244, 0.8);
+    color: rgba(68, 68, 68, 1);
+    border: 1px solid rgba(229, 229, 229, 0.8);
+    border-radius: 20px;
+    width: 138px;
+    height: 40px;
+    padding-top: 7px;
+
+    &.active + .drop-down-menu {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    &.active::after {
+      transform: rotate(-180deg);
+    }
+
+    &::after {
+      content: "";
+      display: inline-block;
+      background-image: url("../images/svg_line_arrow_down.svg");
+      background-repeat: no-repeat;
+      background-size: 12px 12px;
+      width: 15px;
+      height: 15px;
+      margin-left: 10px;
+      transition: transform 0.5s;
+      transform: rotate(0) translateY(3px);
+    }
+  }
+
+  .drop-down-menu {
+    position: absolute;
+    background-color: #fff;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, transform 0.3s;
+    width: 240px;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    top: 115%;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px 0 rgba(0, 0, 0, 0.12);
+    z-index: 10;
+
+    li {
+      &:hover > a {
+        background-color: rgba(244, 244, 244, 0.8);
+        text-decoration: underline;
+      }
+
+      a {
+        display: flex;
+        align-content: center;
+        padding: 18px 24px;
+        font-size: 13px;
+
+        &::after {
+          @include outlink-icon;
+          margin-left: 3px;
+          transform: translateY(-0.8px);
+        }
+      }
+    }
+  }
+}
+
+.change-lang-box {
+  margin-left: 23px;
+
+  .change-lang-icon {
+    display: inline-block;
+    background-image: url("../images/icon_eng.svg");
+    background-repeat: no-repeat;
+    background-size: 20px 20px;
+    background-position: center;
+    width: 24px;
+    height: 24px;
+    transition: opacity 0.3s;
+
+    &:hover {
+      opacity: 0.5;
+    }
+  }
+}
+/* 탑바 스타일 끝 */
+
+/* 배너 스타일 시작 */
+
+// main-banner 구현 시작
+.main-banner-box {
+  .banner-con {
+    position: relative;
+  }
+
+  .banner-main-content {
+    background-image: url("../images/main-bg3.png");
+    max-width: 1200px;
+    background-repeat: no-repeat;
+    background-size: contain;
+    height: 884px;
+    position: relative;
+    z-index: 1;
+
+    .text-box {
+      position: absolute;
+      top: 172px;
+      left: 87px;
+
+      .main-title {
+        font-size: 49px;
+        font-weight: bold;
+      }
+
+      p[class^="sub"] {
+        opacity: 0.7;
+        line-height: 27px;
+      }
+    }
+
+    .link-store {
+      position: absolute;
+      left: 87px;
+      top: 510px;
+
+      li {
+        &:hover {
+          .store-text {
+            text-decoration: underline;
+          }
+        }
+
+        a {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background-color: #fff;
+          border-radius: 10px;
+          padding-top: 4px;
+          width: 170px;
+          height: 50px;
+          font-weight: bold;
+
+          @mixin store-icon($x, $y) {
+            display: inline-block;
+            background-image: url("../images/img_kabang_220615.png");
+            background-repeat: no-repeat;
+            width: 24px;
+            height: 24px;
+            margin: -2px 10px 0 0;
+            background-position: $x $y;
+          }
+
+          .google-play {
+            @include store-icon(-341px, -292px);
+          }
+
+          .app-store {
+            @include store-icon(-371px, -292px);
+          }
+        }
+      }
+    }
+  }
+
+  .background {
+    position: absolute;
+    width: 100%;
+    height: 720px;
+    background-color: #ffef6b;
+    top: 0;
+  }
+}
+// main-banner 구현 끝
+
+// 배너 공통 디자인
+@mixin banner-con() {
+  display: flex;
+  height: 100%;
+
+  // 임시
+  & {
+    > div {
+      position: relative;
+
+      &:first-child {
+        width: 55%;
+      }
+
+      &:last-child {
+        width: 45%;
+      }
+    }
+  }
+}
+
+@mixin cont-text() {
+  h1 {
+    font-size: 40px;
+    font-weight: bold;
+  }
+
+  p {
+    color: #666;
+  }
+}
+
+@mixin banner-btn($width: 258px, $height: 56px) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: $width;
+  height: $height;
+  background-color: #f6f6f6;
+  color: #333;
+  border-radius: 15px;
+  gap: 0 8px;
+
+  &:hover .cont-btn-text {
+    text-decoration: underline;
+  }
+
+  & .cont-btn-img {
+    img {
+      width: 6px;
+      height: 9px;
+      margin-bottom: 4.5px;
+    }
+  }
+}
+
+@mixin cont-box($left: auto) {
+  position: absolute;
+  top: 50%;
+  left: $left;
+  transform: translatey(-50%);
+
+  .cont-text {
+    @include cont-text;
+  }
+
+  .cont-btn a {
+    @include banner-btn;
+  }
+}
+
+@mixin cont-img(
+  $left: auto,
+  $width: auto,
+  $height: auto,
+  $translateX: 0,
+  $translateY: -50%
+) {
+  position: absolute;
+  top: 50%;
+  left: $left;
+  transform: translate($translateX, $translateY);
+
+  img {
+    width: $width;
+    height: $height;
+  }
+}
+
+.banner-content-type {
+  height: 720px;
+
+  > .con {
+    @include banner-con;
+  }
+}
+
+.banner-content-between-pad {
+  height: 32px;
+  background-color: #fafafa;
+}
+// 배너 공통 디자인
+
+// 배너 1 ~ 5 구현 시작
+// 배너 1
+.banner-content-type-1 {
+  .cont-img {
+    @include cont-img($left: 10px, $width: 473px);
+  }
+
+  .cont-box {
+    @include cont-box($left: 50px);
+  }
+}
+
+// 배너2
+.banner-content-type-2 {
+  .cont-img {
+    @include cont-img($left: 130px, $width: 409px, $height: 722px);
+    transform: translate(100%, -50%);
+    opacity: 0;
+    transition: transform 1.4s cubic-bezier(0.6, 0.2, 0.1, 1) 0.5s,
+      opacity 1.4s cubic-bezier(0.6, 0.2, 0.1, 1) 0.5s;
+
+    &.active {
+      opacity: 1;
+      transform: translate(0, -50%);
+    }
+  }
+
+  .cont-box {
+    @include cont-box($left: 50px);
+
+    .cont-btn a {
+      @include banner-btn($width: 158px);
+    }
+
+    .cont-sub-img img {
+      width: 440px;
+    }
+  }
+}
+
+// 배너3
+.banner-content-type-3 {
+  .cont-img {
+    @include cont-img($left: 23px, $width: 459px, $height: 607px);
+  }
+
+  .cont-box {
+    @include cont-box($left: 40px);
+  }
+}
+
+// 배너4
+.banner-content-type-4 {
+  .cont-img {
+    @include cont-img($left: -10px, $width: 492px, $height: 408px);
+  }
+
+  .cont-box {
+    @include cont-box($left: 80px);
+  }
+}
+
+// 배너4
+.banner-content-type-5 {
+  background: url("../images/home_map.png") no-repeat -12% 50%;
+
+  .cont-img {
+    @include cont-img(
+      $left: 10px,
+      $width: 408px,
+      $height: 715px,
+      $translateY: 100%
+    );
+    opacity: 0;
+    transition: opacity 1.4s cubic-bezier(0.6, 0.2, 0.1, 1) 0.5s,
+      transform 1.4s cubic-bezier(0.6, 0.2, 0.1, 1) 0.5s;
+
+    &.active {
+      opacity: 1;
+      transform: translate(0, -50%);
+    }
+  }
+
+  .cont-box {
+    @include cont-box($left: 44px);
+  }
+}
+// 배너 1 ~ 5 구현 끝
+/* 배너 스타일 끝 */
+
+/* 대출 박스 구현 시작 */
+.loan-box {
+  position: relative;
+  color: white;
+
+  .con {
+    position: relative;
+    z-index: 1;
+
+    .des {
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    .loan-cont-btns > a {
+      @include banner-btn($width: 166px, $height: 52px);
+      background-color: rgba(255, 255, 255, 0.09);
+      color: #fff;
+    }
+
+    .loan-box-img {
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+
+      img {
+        width: 429px;
+        height: 563px;
+      }
+    }
+  }
+
+  &.active {
+    .blue {
+      height: 0 !important;
+    }
+
+    .shadow {
+      top: -23% !important;
+      left: -23% !important;
+      background-color: #333b58 !important;
+    }
+
+    .base {
+      background-color: white !important;
+    }
+
+    .stars {
+      display: block !important;
+    }
+  }
+
+  .sky {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #333b58;
+
+    .blue {
+      @extend .sky;
+      background-color: #559cde;
+      transition: height 0.5s;
+    }
+
+    .moon {
+      position: absolute;
+      width: 112px;
+      height: 112px;
+      top: 180px;
+      left: calc(50% + 480px);
+      overflow: hidden;
+
+      .base {
+        width: 110px;
+        height: 110px;
+        border-radius: 50%;
+        background-color: #ffdc00;
+        transition: background-color 0.5s 0.5s;
+      }
+
+      .shadow {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: -90%;
+        left: -90%;
+        border-radius: 50%;
+        transition: top 0.5s 0.5s, left 0.5s 0.5s;
+      }
+    }
+
+    .stars {
+      display: none;
+
+      .ico-star {
+        position: absolute;
+        display: block;
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background-color: #fff;
+      }
+
+      .ico-star-1 {
+        top: 30%;
+        left: 10%;
+        animation: clittering 2s infinite;
+      }
+
+      .ico-star-2 {
+        top: 10%;
+        left: 20%;
+        animation: clittering 3s infinite;
+      }
+
+      .ico-star-3 {
+        top: 25%;
+        left: 15%;
+        animation: clittering 5s infinite;
+      }
+
+      .ico-star-4 {
+        top: 40%;
+        right: 15%;
+        animation: clittering 2s infinite;
+      }
+
+      .ico-star-5 {
+        top: 43%;
+        right: 30%;
+        animation: clittering 4s infinite;
+      }
+
+      .ico-star-6 {
+        top: 73%;
+        right: 27%;
+        animation: clittering 1.8s infinite;
+      }
+
+      .ico-star-7 {
+        top: 65%;
+        left: 22%;
+        animation: clittering 3.5s infinite;
+      }
+    }
+  }
+}
+
+@keyframes clittering {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(0.9);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+}
+/* 대출 박스 구현 끝 */
+
+/* 체크 카드 스타일 시작 */
+.checkcard-box {
+  .btn-box > a {
+    @include banner-btn();
+    color: #333;
+  }
+}
+
+.checkcard-swiper-wrap {
+  position: relative;
+
+  .swiper {
+    .swiper-slide {
+      height: auto;
+      transition: transform 0.5s;
+
+      &.swiper-slide-prev {
+        left: 67px;
+      }
+
+      &.swiper-slide-next {
+        right: 67px;
+      }
+
+      &.swiper-slide-active {
+        transform: scale(1.1);
+        z-index: 1;
+      }
+    }
+  }
+
+  .swiper-btn-wrap {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 100%;
+
+    @mixin checkbox-btn($url) {
+      content: "";
+      display: inline-block;
+      width: 100%;
+      height: 100%;
+      background: url($url) no-repeat center;
+    }
+
+    .swiper-button {
+      width: 80px;
+      height: 80px;
+      opacity: 0.7;
+
+      &:hover {
+        opacity: 1;
+      }
+
+      &-prev {
+        left: 65px;
+
+        &::after {
+          @include checkbox-btn("../images/img-left.png");
+        }
+      }
+
+      &-next {
+        right: 65px;
+
+        &::after {
+          @include checkbox-btn("../images/img-right.png");
+        }
+      }
+    }
+  }
+}
+/* 체크 카드 스타일 끝 */
+
+/* itskill box 스타일 시작 */
+.itskill-box {
+  background-color: #f9f9f9;
+  padding-bottom: 230px;
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 1px;
+    background-color: rgba(0, 0, 0, 0.06);
+    left: 0;
+    top: 530px;
+  }
+
+  .itskil-bar {
+    margin-top: 20px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &::after {
+      content: "";
+      display: block;
+      width: 100px;
+      height: 2px;
+      background-color: black;
+    }
+  }
+
+  .cont-img {
+    display: flex;
+    justify-content: center;
+
+    img {
+      width: 1020px;
+      z-index: 1;
+    }
+  }
+
+  .cont-des {
+    strong {
+      display: block;
+      margin-top: 30px;
+      font-size: 18px;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    p {
+      color: #666;
+      font-size: 14px;
+      text-align: center;
+    }
+  }
+}
+/* itskill box 스타일 끝 */
+
+/* footer 스타일 시작 */
+.footer-bar {
+  background-color: #eee;
+  padding: 30px 0;
+
+  .info-menu {
+    ul > li {
+      &:hover > a {
+        text-decoration: underline;
+      }
+
+      &:not(:nth-last-child(4), :last-child) {
+        a::after {
+          content: "";
+          position: absolute;
+          top: 50%;
+          transform: translateY(-60%);
+          right: 0;
+          display: inline-block;
+          background-color: #d8d8d8;
+          width: 1px;
+          height: 10px;
+        }
+      }
+
+      a {
+        display: block;
+        font-size: 11px;
+        color: #666;
+        padding: 5px 12px;
+        position: relative;
+      }
+    }
+  }
+}
+
+.footer-bottom {
+  .sns-list-box {
+    ul {
+      a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 8px;
+
+        .sns-icon {
+          display: block;
+          background-image: url("../images/ico_sns.png");
+          background-repeat: no-repeat;
+          width: 24px;
+          height: 24px;
+        }
+
+        .icon-facebook {
+          background-position: 0 -90px;
+        }
+
+        .icon-instagram {
+          background-position: -191px -138px;
+        }
+
+        .icon-youtube {
+          background-position: -90px -90px;
+        }
+
+        .icon-brundch {
+          background-position: -217px -138px;
+        }
+      }
+    }
+  }
+}
+/* footer 스타일 끝 */
